@@ -2,17 +2,23 @@ package be.ordina.springbatch.domain;
 
 public class Fine {
 	
+	public static final int MAX_SPEED = 130;
 	private LicensePlate licensePlate;
 	private int speed;
 	private long amountToPay;
 	private boolean graveError;
 	
-	public Fine(LicensePlate licensePlate, int speed, long amountToPay, boolean graveError) {
+	public Fine(LicensePlate licensePlate, int speed) {
 		super();
 		this.licensePlate = licensePlate;
 		this.speed = speed;
-		this.amountToPay = amountToPay;
-		this.graveError = graveError;
+		calculateAmountToPay(speed);
+	}
+	private void calculateAmountToPay(int speed) {
+		if(speed > MAX_SPEED) {
+			this.amountToPay = 50l + ((speed - MAX_SPEED)/10 * 10);
+		}
+		this.graveError = speed - MAX_SPEED > 30;
 	}
 	public int getSpeed() {
 		return speed;
