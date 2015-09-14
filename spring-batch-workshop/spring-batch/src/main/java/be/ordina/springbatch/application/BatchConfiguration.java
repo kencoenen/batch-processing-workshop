@@ -11,27 +11,35 @@ import org.springframework.batch.item.ItemProcessor;
 import org.springframework.batch.item.ItemReader;
 import org.springframework.batch.item.ItemWriter;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 
+import be.ordina.springbatch.domain.Fine;
 import be.ordina.springbatch.domain.TrajectInformation;
 
 @Configuration
 @EnableBatchProcessing
+@ComponentScan
 public class BatchConfiguration {
 	
 	@Bean
+	public TrajectInformationTokenizer tokenizer() {
+		return new TrajectInformationTokenizer();
+	}
+	
+	@Bean
     public ItemReader<TrajectInformation> reader() {
-		return new TrajectInformationReader();
+		return new TrajectInformationReader(tokenizer());
     }
 
     @Bean
-    public ItemProcessor<TrajectInformation, TrajectInformation> processor() {
+    public ItemProcessor<TrajectInformation, Fine> processor() {
     	return new TrajectInformationProcessor();
     }
 
     @Bean
-    public ItemWriter<TrajectInformation> writer() {
-    	return new TrajectInformationWriter();
+    public ItemWriter<Fine> writer() {
+    	return new FineInformationWriter();
     }
     
     @Bean
@@ -52,9 +60,9 @@ public class BatchConfiguration {
 
     @Bean
     public Step step1(StepBuilderFactory stepBuilderFactory, ItemReader<TrajectInformation> reader,
-            ItemWriter<TrajectInformation> writer, ItemProcessor<TrajectInformation, TrajectInformation> processor) {
+            ItemWriter<Fine> writer, ItemProcessor<TrajectInformation, Fine> processor) {
         return stepBuilderFactory.get("processTrajectInformationStep")
-                .<TrajectInformation, TrajectInformation> chunk(10)
+                .<TrajectInformation, Fine> chunk(10)
                 .reader(reader)
                 .processor(processor)
                 .writer(writer)

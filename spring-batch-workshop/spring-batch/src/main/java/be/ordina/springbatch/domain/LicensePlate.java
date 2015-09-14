@@ -5,24 +5,22 @@ public class LicensePlate {
 	private String rawInput;
 	private LicensePlateType type;
 	
-	public LicensePlate(String rawInput, LicensePlateType type) {
+	public LicensePlate(String rawInput) {
 		super();
 		this.rawInput = rawInput;
-		this.type = type;
+		this.type = LicensePlateType.fromRawInput(rawInput);
 	}
 	
 	public String getRawInput() {
 		return rawInput;
 	}
-	public void setRawInput(String rawInput) {
-		this.rawInput = rawInput;
-	}
 	public LicensePlateType getType() {
 		return type;
 	}
-	public void setType(LicensePlateType type) {
-		this.type = type;
+
+	@Override
+	public String toString() {
+		return "LicensePlate [rawInput=" + rawInput + ", type=" + type + "]";
 	}
 	
-
 }
