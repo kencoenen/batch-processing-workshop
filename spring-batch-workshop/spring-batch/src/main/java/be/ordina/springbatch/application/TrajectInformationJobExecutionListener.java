@@ -9,7 +9,9 @@ public class TrajectInformationJobExecutionListener implements JobExecutionListe
 	@Override
 	public void afterJob(JobExecution jobExecution) {
 		if(jobExecution.getExitStatus().equals(ExitStatus.COMPLETED)) {
-			System.out.println("BATCH COMPLETED WITH GREAT SUCCESS");
+			int reads = jobExecution.getStepExecutions().stream().mapToInt(se -> se.getReadCount()).sum();
+			int writes = jobExecution.getStepExecutions().stream().mapToInt(se -> se.getWriteCount()).sum();
+			System.out.println("BATCH COMPLETED WITH GREAT SUCCESS reads = [ " + reads + " ] writes = [ " + writes + " ]" );
 		} else {
 			System.err.println("BATCH COMPLETED WITH STATUS " + jobExecution.getExitStatus().getExitCode());
 		}

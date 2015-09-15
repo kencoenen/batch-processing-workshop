@@ -19,10 +19,7 @@ public class TrajectInformationProcessor implements ItemProcessor<TrajectInforma
 
 	@Override
 	public Fine process(TrajectInformation trajectInformation) throws Exception {
-		Long timeSpent = trajectInformation.getIncomingTime().until(trajectInformation.getOutgoingTime(), SECONDS);
-		BigDecimal hour = new BigDecimal(timeSpent).divide(new BigDecimal(3600),5,RoundingMode.UP);
-		BigDecimal coefficient = new BigDecimal(1).divide(hour, 5, RoundingMode.UP);
-		BigDecimal kmPerHour = DISTANCE.multiply(coefficient);
+		BigDecimal kmPerHour = calculateKmPerHour(trajectInformation);
 		if(kmPerHour.intValue() > Fine.MAX_SPEED) {
 			return new Fine(trajectInformation.getLicensePlate(), kmPerHour.intValue());
 		} else {
@@ -30,4 +27,12 @@ public class TrajectInformationProcessor implements ItemProcessor<TrajectInforma
 		}
 	}
 
+	private BigDecimal calculateKmPerHour(TrajectInformation trajectInformation) {
+		Long timeSpent = trajectInformation.getIncomingTime().until(trajectInformation.getOutgoingTime(), SECONDS);
+		BigDecimal hour = new BigDecimal(timeSpent).divide(new BigDecimal(3600),5,RoundingMode.UP);
+		BigDecimal coefficient = new BigDecimal(1).divide(hour, 5, RoundingMode.UP);
+		BigDecimal kmPerHour = DISTANCE.multiply(coefficient);
+		return kmPerHour;
+	}
+	
 }
