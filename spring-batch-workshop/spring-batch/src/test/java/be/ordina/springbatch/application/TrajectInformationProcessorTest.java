@@ -11,6 +11,7 @@ import org.hamcrest.Matchers;
 import org.junit.Test;
 import org.junit.experimental.theories.suppliers.TestedOn;
 
+import be.ordina.springbatch.application.batch.TrajectInformationProcessor;
 import be.ordina.springbatch.domain.Fine;
 import be.ordina.springbatch.domain.LicensePlate;
 import be.ordina.springbatch.domain.LicensePlateType;

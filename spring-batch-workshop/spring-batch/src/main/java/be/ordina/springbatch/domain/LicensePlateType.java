@@ -1,7 +1,9 @@
 package be.ordina.springbatch.domain;
 
 import java.util.Arrays;
+import java.util.List;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 
 public enum LicensePlateType {
 	//1-AAA-000
@@ -21,6 +23,11 @@ public enum LicensePlateType {
 
 	public static LicensePlateType fromRawInput(String rawInput) {
 		return Arrays.stream(LicensePlateType.values()).filter(plateType -> plateType.pattern.matcher(rawInput).matches()).findFirst().get();
+	}
+	
+	public static String[] names() {
+		 List<String> names = Arrays.stream(LicensePlateType.values()).map(lpt -> lpt.name()).collect(Collectors.toList());
+		 return names.toArray(new String[names.size()]);
 	}
 
 }

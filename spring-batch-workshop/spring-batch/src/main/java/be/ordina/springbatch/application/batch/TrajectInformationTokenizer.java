@@ -1,4 +1,4 @@
-package be.ordina.springbatch.application;
+package be.ordina.springbatch.application.batch;
 
 import org.springframework.batch.item.file.transform.FixedLengthTokenizer;
 import org.springframework.batch.item.file.transform.Range;

@@ -1,4 +1,4 @@
-package be.ordina.springbatch.application;
+package be.ordina.springbatch.application.batch;
 
 import static java.time.temporal.ChronoUnit.SECONDS;
 

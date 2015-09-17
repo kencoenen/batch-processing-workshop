@@ -1,4 +1,4 @@
-package be.ordina.springbatch.application;
+package be.ordina.springbatch.application.batch;
 
 import java.beans.PropertyEditor;
 import java.time.LocalDateTime;
@@ -13,8 +13,8 @@ import org.springframework.core.io.ClassPathResource;
 
 import be.ordina.springbatch.domain.LicensePlate;
 import be.ordina.springbatch.domain.TrajectInformation;
-import be.ordina.springbatch.domain.propertyeditor.LicensePlatePropertyEditor;
-import be.ordina.springbatch.domain.propertyeditor.LocalDateTimePropertyEditor;
+import be.ordina.springbatch.propertyeditor.LicensePlatePropertyEditor;
+import be.ordina.springbatch.propertyeditor.LocalDateTimePropertyEditor;
 
 public class TrajectInformationReader extends FlatFileItemReader<TrajectInformation> {
 
