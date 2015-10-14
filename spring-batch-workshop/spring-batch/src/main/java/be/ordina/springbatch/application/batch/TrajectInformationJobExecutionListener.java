@@ -17,6 +17,8 @@ public class TrajectInformationJobExecutionListener implements JobExecutionListe
 			for (LicensePlateType licensePlateType : LicensePlateType.values()) {
 				System.out.println(licensePlateType.name().toLowerCase() + " - " + jobExecution.getExecutionContext().getInt(licensePlateType.name(), 0));
 			}
+			System.out.println("Total grave errors this batch : " + jobExecution.getExecutionContext().getInt("graveErrors"));
+			System.out.println("Total money stolen from the honest speeder : " + jobExecution.getExecutionContext().getDouble("total") +"€");
 		} else {
 			System.err.println("BATCH COMPLETED WITH STATUS " + jobExecution.getExitStatus().getExitCode());
 		}

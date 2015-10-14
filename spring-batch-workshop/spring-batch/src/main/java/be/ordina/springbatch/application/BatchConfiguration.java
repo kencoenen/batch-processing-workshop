@@ -1,5 +1,10 @@
 package be.ordina.springbatch.application;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
+import org.springframework.batch.core.ChunkListener;
 import org.springframework.batch.core.Job;
 import org.springframework.batch.core.JobExecutionListener;
 import org.springframework.batch.core.Step;
@@ -17,6 +22,7 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 
 import be.ordina.springbatch.application.batch.FineInformationWriter;
+import be.ordina.springbatch.application.batch.SpringBatchWorkshopChunkListener;
 import be.ordina.springbatch.application.batch.TrajectInformationJobExecutionListener;
 import be.ordina.springbatch.application.batch.TrajectInformationProcessor;
 import be.ordina.springbatch.application.batch.TrajectInformationReader;
@@ -63,8 +69,15 @@ public class BatchConfiguration {
     @Bean
     public ExecutionContextPromotionListener statisticsListener() {
     	ExecutionContextPromotionListener executionContextPromotionListener = new ExecutionContextPromotionListener();
-    	executionContextPromotionListener.setKeys(LicensePlateType.names());
+    	List<String> keys = new ArrayList<>(Arrays.asList("graveErrors", "total"));
+    	keys.addAll(Arrays.asList(LicensePlateType.names()));
+		executionContextPromotionListener.setKeys(keys.toArray(new String[keys.size()]));
 		return executionContextPromotionListener;
+    }
+    
+    @Bean
+    public ChunkListener chunkListener() {
+    	return new SpringBatchWorkshopChunkListener();
     }
     
 
@@ -81,12 +94,13 @@ public class BatchConfiguration {
     @Bean
     public Step processTrajectInformationStep(StepBuilderFactory stepBuilderFactory) {
         return stepBuilderFactory.get("processTrajectInformationStep")
-                .<TrajectInformation, Fine> chunk(10)
+                .<TrajectInformation, Fine> chunk(100000)
                 .reader(reader())
                 .processor(processor())
                 .writer(writer())
                 .listener(noWorkFoundStepExecutionListener())
                 .listener(statisticsListener())
+                .listener(chunkListener())
                 .build();
     }
 	

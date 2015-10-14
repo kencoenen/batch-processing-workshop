@@ -19,7 +19,7 @@ public class FineInformationWriter implements ItemWriter<Fine> {
 	public void write(List<? extends Fine> fines) throws Exception {
 		for (Fine fine : fines) {
 			upTheTally(fine);
-			System.out.println(fine);
+//			System.out.println(fine);
 		}
 	}
 
@@ -27,6 +27,10 @@ public class FineInformationWriter implements ItemWriter<Fine> {
 	private void upTheTally(Fine fine) {
 		ExecutionContext executionContext = stepExecution.getExecutionContext();
 		executionContext.put(fine.getLicensePlate().getType().name(), executionContext.getInt(fine.getLicensePlate().getType().name(), 0) + 1);
+		executionContext.put("total", executionContext.getDouble("total", 0L) + fine.getAmountToPay());
+		if(fine.isGraveError()) {
+			executionContext.put("graveErrors", executionContext.getInt("graveErrors", 0) + 1);
+		}
 	}
 	
 	
