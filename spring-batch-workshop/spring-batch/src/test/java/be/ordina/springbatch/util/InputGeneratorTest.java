@@ -9,6 +9,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
@@ -20,6 +21,7 @@ public class InputGeneratorTest {
 	private Random random = new Random();
 	private static List<String> licensePlates = Arrays.asList("ABC-123","1-XYZ-999","SHHHHH","9-JOS-999","CD-554BDE","1-FRG-020","1-DVL-977","1-EKP-240","PORSHJ911","LOLOIL","1-POP-030","1-CVJ-564","CD-200HJI","AZE-390","CD-45XJC","1-JKL-008","JOVALLLY");
 	
+	@Ignore("unIgnore this test to generate data")
 	@Test
 	public void generateInput() {
 		System.out.println("generating input file, this can take up to a minute or 2, please be patient...");
