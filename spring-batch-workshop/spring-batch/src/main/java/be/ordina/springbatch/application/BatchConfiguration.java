@@ -17,6 +17,7 @@ import org.springframework.batch.core.step.NoWorkFoundStepExecutionListener;
 import org.springframework.batch.item.ItemProcessor;
 import org.springframework.batch.item.ItemReader;
 import org.springframework.batch.item.ItemWriter;
+import org.springframework.batch.item.file.FlatFileParseException;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
@@ -96,6 +97,9 @@ public class BatchConfiguration {
         return stepBuilderFactory.get("processTrajectInformationStep")
                 .<TrajectInformation, Fine> chunk(100000)
                 .reader(reader())
+                .faultTolerant()
+                .skipLimit(5)
+                .skip(FlatFileParseException.class)
                 .processor(processor())
                 .writer(writer())
                 .listener(noWorkFoundStepExecutionListener())
@@ -103,7 +107,4 @@ public class BatchConfiguration {
                 .listener(chunkListener())
                 .build();
     }
-	
-	
-
 }

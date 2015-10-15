@@ -13,7 +13,8 @@ public class TrajectInformationJobExecutionListener implements JobExecutionListe
 		if(jobExecution.getExitStatus().equals(ExitStatus.COMPLETED)) {
 			int reads = jobExecution.getStepExecutions().stream().mapToInt(se -> se.getReadCount()).sum();
 			int writes = jobExecution.getStepExecutions().stream().mapToInt(se -> se.getWriteCount()).sum();
-			System.out.println("BATCH COMPLETED WITH GREAT SUCCESS reads = [ " + reads + " ] writes = [ " + writes + " ]" );
+			int skips = jobExecution.getStepExecutions().stream().mapToInt(se -> se.getSkipCount()).sum();
+			System.out.println("BATCH COMPLETED WITH GREAT SUCCESS reads = [ " + reads + " ] writes = [ " + writes + " ] skips = [" + skips +"]" );
 			for (LicensePlateType licensePlateType : LicensePlateType.values()) {
 				System.out.println(licensePlateType.name().toLowerCase() + " - " + jobExecution.getExecutionContext().getInt(licensePlateType.name(), 0));
 			}
