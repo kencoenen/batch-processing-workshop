@@ -26,7 +26,7 @@ public class JobExecutionResource {
 	private ExitStatus exitStatus;
 	private Long id;
 	private String status;
-	private List<String> exceptions = new ArrayList();
+	private List<String> exceptions = new ArrayList<>();
 	private List<StepExecutionResource> steps = new ArrayList<>();
 	private Map<String,Object> context = new HashMap<String, Object>();
 	private Map<String, JobParameter> parameters = new HashMap<>();

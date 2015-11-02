@@ -3,13 +3,12 @@ package be.ordina.springbatch.application;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.nullValue;
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertThat;
+import static org.junit.Assert.fail;
 
 import java.time.LocalDateTime;
 
-import org.hamcrest.Matchers;
 import org.junit.Test;
-import org.junit.experimental.theories.suppliers.TestedOn;
 
 import be.ordina.springbatch.application.batch.TrajectInformationProcessor;
 import be.ordina.springbatch.domain.Fine;
