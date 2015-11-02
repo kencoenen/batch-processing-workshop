@@ -26,7 +26,7 @@ public class InputGeneratorTest {
 	public void generateInput() {
 		System.out.println("generating input file, this can take up to a minute or 2, please be patient...");
 		try (BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream("./src/main/resources/input.txt"), "utf-8"))) {
-			for (int i = 0; i < 50000; i++) {
+			for (int i = 0; i < 5000000; i++) {
 				Double chance = random.nextDouble() * 10;
 				Integer minute;
 				if(chance < 0.05) {
