@@ -1,0 +1,40 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:jdbc="http://www.springframework.org/schema/jdbc"
+	xsi:schemaLocation="
+		http://www.springframework.org/schema/beans 
+		http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
+		http://www.springframework.org/schema/jdbc 
+	    http://www.springframework.org/schema/jdbc/spring-jdbc.xsd">
+
+	<!-- using in-memory store for batch meta-data -->
+	<bean id="jobRepository"
+		class="org.springframework.batch.core.repository.support.MapJobRepositoryFactoryBean">
+		<property name="transactionManager" ref="transactionManager" />
+	</bean>
+
+	<bean id="transactionManager"
+		class="org.springframework.batch.support.transaction.ResourcelessTransactionManager" />
+
+	<bean id="jobLauncher"
+		class="org.springframework.batch.core.launch.support.SimpleJobLauncher">
+		<property name="jobRepository" ref="jobRepository" />
+	</bean>
+
+	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource"
+		lazy-init="true" destroy-method="close">
+		<property name="driverClassName" value="org.hsqldb.jdbcDriver" />
+		<property name="url"
+			value="jdbc:hsqldb:file:src/main/resources/hsqldb/batchcore.db;shutdown=true;" />
+		<property name="username" value="sa" />
+		<property name="password" value="" />
+
+	</bean>
+
+	<!-- Create meta-tables. Here we are also invoking the db_setup.sql script -->
+	<jdbc:initialize-database data-source="dataSource">
+		<jdbc:script location="classpath:/db_setup.sql" />
+		<jdbc:script location="org/springframework/batch/core/schema-drop-hsqldb.sql" />
+		<jdbc:script location="org/springframework/batch/core/schema-hsqldb.sql" />
+	</jdbc:initialize-database>
+
+</beans>

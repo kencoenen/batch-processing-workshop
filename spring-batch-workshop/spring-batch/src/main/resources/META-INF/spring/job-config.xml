@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:batch="http://www.springframework.org/schema/batch" xmlns:util="http://www.springframework.org/schema/util"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/batch 
+		http://www.springframework.org/schema/batch/spring-batch-2.2.xsd
+		http://www.springframework.org/schema/beans 
+		http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
+		http://www.springframework.org/schema/util 
+		http://www.springframework.org/schema/util/spring-util-3.2.xsd
+		">
+
+	<!-- Configuring a Job with one master step and 4 (denoted by grid-size) 
+		slave threads -->
+	<job id="myJob" xmlns="http://www.springframework.org/schema/batch">
+		<step id="master.Step">
+			<partition step="slave.Step" partitioner="myPartitioner">
+				<handler grid-size="4" task-executor="myTaskExecutor" />
+			</partition>
+		</step>
+	</job>
+
+	<step id="slave.Step" xmlns="http://www.springframework.org/schema/batch">
+		<tasklet>
+			<chunk reader="pagingItemReader" writer="flatFileItemWriter"
+				commit-interval="1" />
+		</tasklet>
+	</step>
+
+	<bean id="myTaskExecutor" class="org.springframework.core.task.SimpleAsyncTaskExecutor" />
+
+	<bean id="myPartitioner" class="be.ordina.springbatch.application.MyPartitioner" />
+
+	<bean id="pagingItemReader"
+		class="org.springframework.batch.item.database.JdbcPagingItemReader"
+		scope="step">
+		<property name="dataSource" ref="dataSource" />
+		<property name="queryProvider">
+			<bean
+				class="org.springframework.batch.item.database.support.SqlPagingQueryProviderFactoryBean">
+				<property name="dataSource" ref="dataSource" />
+				<property name="selectClause" value="select firstName, lastName, city, id " />
+				<property name="fromClause" value="from PERSON" />
+				<property name="whereClause"
+					value="where id &#62;= :startingIndex and id &#60;= :endingIndex" />
+				<property name="sortKey" value="id" />
+			</bean>
+		</property>
+		<property name="parameterValues">
+			<map>
+				<entry key="startingIndex" value="#{stepExecutionContext[startingIndex]}" />
+				<entry key="endingIndex" value="#{stepExecutionContext[endingIndex]}" />
+			</map>
+		</property>
+		<property name="pageSize" value="5" />
+		<property name="rowMapper">
+			<bean class="be.ordina.springbatch.mapper.JdbcPersonMapper" />
+		</property>
+	</bean>
+
+	<bean id="flatFileItemWriter" class="org.springframework.batch.item.file.FlatFileItemWriter"
+		scope="step">
+		<property name="resource"
+			value="file:csv/output/person.data#{stepExecutionContext[startingIndex]}-#{stepExecutionContext[endingIndex]}.csv" />
+		<property name="appendAllowed" value="false" />
+		<property name="lineAggregator">
+			<bean
+				class="org.springframework.batch.item.file.transform.DelimitedLineAggregator">
+				<property name="delimiter" value="," />
+				<property name="fieldExtractor">
+					<bean
+						class="org.springframework.batch.item.file.transform.BeanWrapperFieldExtractor">
+						<property name="names" value="firstName, name, city" />
+					</bean>
+				</property>
+			</bean>
+		</property>
+	</bean>
+
+</beans>
