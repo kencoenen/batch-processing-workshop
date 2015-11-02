@@ -83,7 +83,7 @@ public class BatchConfiguration {
     
 
     @Bean
-    public Job importUserJob(JobBuilderFactory jobs, Step processTrajectInformationStep) {
+    public Job importTrajectInformationJob(JobBuilderFactory jobs, Step processTrajectInformationStep) {
         return jobs.get("importTrajectInformation")
                 .incrementer(new RunIdIncrementer())
                 .listener(trajectInformationListener())

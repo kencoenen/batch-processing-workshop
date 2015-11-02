@@ -33,7 +33,6 @@ public class FineInformationWriter extends FlatFileItemWriter<Fine> {
 		super.write(fines);
 		for (Fine fine : fines) {
 			upTheTally(fine);
-//			System.out.println(fine);
 		}
 	}
 
