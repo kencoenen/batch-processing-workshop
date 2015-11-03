@@ -1,4 +1,4 @@
-package be.ordina.springbatch.application.batch;
+package be.ordina.springbatch.application.batch.writer;
 
 import java.util.List;
 

@@ -1,4 +1,4 @@
-package be.ordina.springbatch.application.batch;
+package be.ordina.springbatch.application.batch.listener;
 
 import org.springframework.batch.core.ChunkListener;
 import org.springframework.batch.core.scope.context.ChunkContext;

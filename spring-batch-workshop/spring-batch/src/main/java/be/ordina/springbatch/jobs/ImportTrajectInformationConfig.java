@@ -21,12 +21,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-import be.ordina.springbatch.application.batch.FineInformationWriter;
-import be.ordina.springbatch.application.batch.SpringBatchWorkshopChunkListener;
-import be.ordina.springbatch.application.batch.TrajectInformationJobExecutionListener;
-import be.ordina.springbatch.application.batch.TrajectInformationProcessor;
-import be.ordina.springbatch.application.batch.TrajectInformationReader;
-import be.ordina.springbatch.application.batch.TrajectInformationTokenizer;
+import be.ordina.springbatch.application.batch.listener.SpringBatchWorkshopChunkListener;
+import be.ordina.springbatch.application.batch.listener.TrajectInformationJobExecutionListener;
+import be.ordina.springbatch.application.batch.processor.TrajectInformationProcessor;
+import be.ordina.springbatch.application.batch.reader.TrajectInformationReader;
+import be.ordina.springbatch.application.batch.reader.TrajectInformationTokenizer;
+import be.ordina.springbatch.application.batch.writer.FineInformationWriter;
 import be.ordina.springbatch.domain.Fine;
 import be.ordina.springbatch.domain.LicensePlateType;
 import be.ordina.springbatch.domain.TrajectInformation;

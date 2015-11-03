@@ -7,6 +7,8 @@ import java.time.Month;
 
 import org.junit.Test;
 
+import be.ordina.springbatch.batch.propertyeditor.LocalDateTimePropertyEditor;
+
 public class LocalDateTimePropertyEditorTest {
 
 	@Test

@@ -1,4 +1,4 @@
-package be.ordina.springbatch.application.batch;
+package be.ordina.springbatch.application.batch.processor;
 
 import java.math.BigDecimal;
 

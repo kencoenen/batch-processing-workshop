@@ -4,6 +4,7 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 
+import be.ordina.springbatch.batch.propertyeditor.LicensePlatePropertyEditor;
 import be.ordina.springbatch.domain.LicensePlate;
 
 public class LicensePlatePropertyEditorTest {

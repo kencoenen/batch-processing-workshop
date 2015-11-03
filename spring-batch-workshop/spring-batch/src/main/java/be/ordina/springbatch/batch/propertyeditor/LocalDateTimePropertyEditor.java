@@ -1,4 +1,4 @@
-package be.ordina.springbatch.propertyeditor;
+package be.ordina.springbatch.batch.propertyeditor;
 
 import java.beans.PropertyEditorSupport;
 import java.time.LocalDateTime;

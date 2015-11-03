@@ -1,4 +1,4 @@
-package be.ordina.springbatch.application.batch;
+package be.ordina.springbatch.application.batch.reader;
 
 import java.beans.PropertyEditor;
 import java.time.LocalDateTime;
@@ -8,10 +8,10 @@ import java.util.Map;
 import org.springframework.batch.item.file.mapping.BeanWrapperFieldSetMapper;
 import org.springframework.stereotype.Component;
 
+import be.ordina.springbatch.batch.propertyeditor.LicensePlatePropertyEditor;
+import be.ordina.springbatch.batch.propertyeditor.LocalDateTimePropertyEditor;
 import be.ordina.springbatch.domain.LicensePlate;
 import be.ordina.springbatch.domain.TrajectInformation;
-import be.ordina.springbatch.propertyeditor.LicensePlatePropertyEditor;
-import be.ordina.springbatch.propertyeditor.LocalDateTimePropertyEditor;
 
 @Component
 public class TrajectInformationFieldSetMapper extends BeanWrapperFieldSetMapper<TrajectInformation>{
