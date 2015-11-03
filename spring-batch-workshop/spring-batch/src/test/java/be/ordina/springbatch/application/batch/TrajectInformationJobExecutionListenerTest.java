@@ -18,7 +18,7 @@ import org.springframework.batch.core.StepExecution;
 import org.springframework.batch.item.ExecutionContext;
 import org.springframework.batch.test.MetaDataInstanceFactory;
 
-import be.ordina.springbatch.application.batch.listener.TrajectInformationJobExecutionListener;
+import be.ordina.springbatch.batch.listener.TrajectInformationJobExecutionListener;
 
 public class TrajectInformationJobExecutionListenerTest {
 

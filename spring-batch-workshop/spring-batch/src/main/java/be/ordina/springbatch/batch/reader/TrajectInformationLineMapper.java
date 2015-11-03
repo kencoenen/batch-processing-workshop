@@ -1,4 +1,4 @@
-package be.ordina.springbatch.application.batch.reader;
+package be.ordina.springbatch.batch.reader;
 
 import org.springframework.batch.item.file.mapping.DefaultLineMapper;
 import org.springframework.beans.factory.InitializingBean;

@@ -10,7 +10,7 @@ import java.time.LocalDateTime;
 
 import org.junit.Test;
 
-import be.ordina.springbatch.application.batch.processor.TrajectInformationProcessor;
+import be.ordina.springbatch.batch.processor.TrajectInformationProcessor;
 import be.ordina.springbatch.domain.Fine;
 import be.ordina.springbatch.domain.LicensePlate;
 import be.ordina.springbatch.domain.LicensePlateType;

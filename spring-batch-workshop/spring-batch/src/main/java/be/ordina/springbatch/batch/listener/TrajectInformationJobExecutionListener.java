@@ -1,4 +1,4 @@
-package be.ordina.springbatch.application.batch.listener;
+package be.ordina.springbatch.batch.listener;
 
 import org.springframework.batch.core.ExitStatus;
 import org.springframework.batch.core.JobExecution;

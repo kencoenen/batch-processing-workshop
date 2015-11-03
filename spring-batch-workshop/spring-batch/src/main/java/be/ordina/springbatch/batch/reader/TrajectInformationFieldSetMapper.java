@@ -1,4 +1,4 @@
-package be.ordina.springbatch.application.batch.reader;
+package be.ordina.springbatch.batch.reader;
 
 import java.beans.PropertyEditor;
 import java.time.LocalDateTime;
