@@ -7,6 +7,8 @@ import org.springframework.stereotype.Component;
 @Component
 public class TrajectInformationTokenizer extends FixedLengthTokenizer {
 
+	//20150801110120201508011104451-DVL-123
+	
 	public TrajectInformationTokenizer() {
 		super();
 		setNames(new String[]{"incomingTime","outgoingTime","licensePlate"});

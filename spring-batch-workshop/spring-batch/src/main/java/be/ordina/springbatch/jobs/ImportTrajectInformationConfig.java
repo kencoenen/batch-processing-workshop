@@ -1,4 +1,4 @@
-package be.ordina.springbatch.application;
+package be.ordina.springbatch.jobs;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -8,7 +8,6 @@ import org.springframework.batch.core.ChunkListener;
 import org.springframework.batch.core.Job;
 import org.springframework.batch.core.JobExecutionListener;
 import org.springframework.batch.core.Step;
-import org.springframework.batch.core.configuration.annotation.EnableBatchProcessing;
 import org.springframework.batch.core.configuration.annotation.JobBuilderFactory;
 import org.springframework.batch.core.configuration.annotation.StepBuilderFactory;
 import org.springframework.batch.core.launch.support.RunIdIncrementer;
@@ -18,8 +17,8 @@ import org.springframework.batch.item.ItemProcessor;
 import org.springframework.batch.item.ItemReader;
 import org.springframework.batch.item.ItemWriter;
 import org.springframework.batch.item.file.FlatFileParseException;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 
 import be.ordina.springbatch.application.batch.FineInformationWriter;
@@ -33,9 +32,13 @@ import be.ordina.springbatch.domain.LicensePlateType;
 import be.ordina.springbatch.domain.TrajectInformation;
 
 @Configuration
-@EnableBatchProcessing
-@ComponentScan
-public class BatchConfiguration {
+public class ImportTrajectInformationConfig {
+	
+	@Autowired
+	public JobBuilderFactory jobBuilderFactory;
+
+	@Autowired
+	public StepBuilderFactory stepBuilderFactory;
 	
 	@Bean
 	public TrajectInformationTokenizer tokenizer() {
@@ -83,8 +86,8 @@ public class BatchConfiguration {
     
 
     @Bean
-    public Job importTrajectInformationJob(JobBuilderFactory jobs, Step processTrajectInformationStep) {
-        return jobs.get("importTrajectInformation")
+    public Job importTrajectInformationJob(Step processTrajectInformationStep) {
+        return jobBuilderFactory.get("importTrajectInformation")
                 .incrementer(new RunIdIncrementer())
                 .listener(trajectInformationListener())
                 .flow(processTrajectInformationStep)
@@ -93,7 +96,7 @@ public class BatchConfiguration {
     }
 
     @Bean
-    public Step processTrajectInformationStep(StepBuilderFactory stepBuilderFactory) {
+    public Step processTrajectInformationStep() {
         return stepBuilderFactory.get("processTrajectInformationStep")
                 .<TrajectInformation, Fine> chunk(100000)
                 .reader(reader())

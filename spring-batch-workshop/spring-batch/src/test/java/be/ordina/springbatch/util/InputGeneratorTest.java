@@ -44,6 +44,7 @@ public class InputGeneratorTest {
 				writer.write(startTime.format(DEFAULT_DATE_PATTERN)+endTime.format(DEFAULT_DATE_PATTERN)+licensePlate);
 				writer.newLine();
 			}
+			writer.write("THISLINESHOULDCAUSEASKIPINTHEEND");
 		} catch (Exception e) {
 			System.err.println(e.getMessage());
 		}
